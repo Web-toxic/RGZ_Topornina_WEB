@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Основные финансовые показатели - Группа ГМС</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        #right-sidebar {
+            width: 374px;
+            padding: 10px 13px 20px 13px;
+            float: right;
+            height: 100%;
+            border-left: 1px solid #e5e5e6;
+        }
+
+        #pricetable {
+            font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            width: 90%;
+            background: white;
+            text-align: center;
+            border-collapse: collapse;
+            color: #595b5c;
+        }
+
+        #pricetable th {
+            font-weight: normal;
+            border-bottom: 3px solid #5172b3;
+            border-right: 20px solid white;
+            border-left: 20px solid white;
+            padding: 8px 10px;
+            width: 50%;
+        }
+
+        #pricetable td {
+            padding-top: 6px;
+        }
+
+        .item {
+            border-left: 3px solid #5172b3;
+            background-color: #e5eaf4;
+            padding: 3px 0px 3px 15px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 11px;
+            font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+            color: #595b5c;
+        }
+
+        .value {
+            background-color: white;
+            border: 0;
+        }
+    </style>
+    <script>
+        let day = ['01.05.2023', '02.05.2023', '03.05.2023', '04.05.2023', '05.05.2023', 
+        '08.05.2023', '09.05.2023', '10.05.2023', '11.05.2023','12.05.2023',
+        '15.05.2023','16.05.2023','17.05.2023','18.05.2023','19.05.2023', 
+        '22.05.2023','23.05.2023','24.05.2023','25.05.2023', '26.05.2023','30.05.2023'];
+        
+        let value = [58.10, 57.25, 57.46, 55.90, 57.66, 58.33, 58.97, 59.61, 59.88, 59.96, 
+        61.57, 62.00, 63.36, 64.76, 64.42, 64.36, 63.98, 63.99, 65.20, 66.67, 65.67];
+    
+        function table() {
+          let table = document.getElementById('pricetable');
+    
+          for (i = 0; i < day.length; i++) {
+            let row = document.createElement('tr');
+            let dayCell = document.createElement('td');
+            dayCell.innerHTML = day[i];
+            table.appendChild(row);
+            row.appendChild(dayCell);
+    
+            let valueCell = document.createElement('td');
+            valueCell.innerHTML = value[i];
+            row.appendChild(valueCell);
+          }
+        }
+    
+        function Caluculating() {
+          let minDiv = document.getElementById('minprice');
+          let maxDiv = document.getElementById('maxprice');
+          let dev = document.getElementById('deviation');
+          minDiv.innerHTML = (Math.min(...value));
+          maxDiv.innerHTML = (Math.max(...value));
+    
+          let sum = 0;
+          for (let i = 0; i < value.length; i++) {
+            sum = sum + value[i];
+          }
+          let E = sum / value.length; // нашли ср.арифметическое
+    
+          let sum2dis = 0;
+          for (let i = 0; i < value.length; i++) {
+            sum2dis = sum2dis + (value[i] - E) ** 2; // квадрат расстояния каждого эл-та до ср.арифметического, сумма значений
+          }
+    
+          let deviation = (Math.sqrt((sum2dis) / value.length)).toFixed(3); // делим подученное число на кол-во эл-тов
+    
+          dev.innerHTML = (deviation);
+        } 
+    
+        function start() {
+            table();
+            Caluculating();
+        }
+    </script>
+</head>
+<body onload="start()">
+    <header>
+        <div id="logo">
+            <a id="main" href="index.html">
+                <img src="logo.jpg" style="margin-right: 50px;" width="150" height="63" alt="Группа ГМС">
+                <img src="slogan.gif" width="300" alt="Инженерные решения для управления потоками">
+            </a>
+            <hr id="line">
+        </div>
+        <nav class="panel">
+            <a href="about_company.html">О компании</a>
+            <a href="financial_indicators.html" class="active">Основные финансовые показатели</a>
+            <a href="contacts.html">Контактные данные</a>
+            <a href="video.html">Видео</a>
+        </nav>
+    </header>
+    
+    <main class="content">
+        <div style="display: flex;">
+            <div style="width: 50%;">
+                <h2 style="padding: 10px;">Цена закрытия торгов за май 2023</h2>
+                <table id="pricetable">
+                    <tr style="background-color: #e5eaf4;">
+                    <th>Дата</th>
+                    <th>Цена закрытия</th>
+                    </tr>
+                </table>
+            </div>
+            <div id="right-sidebar">
+                <h2 style="text-align: center; padding-bottom: 10px;">Финансовые показатели на конец мая 2023г.</h2>
+                <p class="item">Минимальное значение: </p>
+                <p id="minprice" class="value"> kz kz kz </p>
+                <p class="item">Максимальное значение: </p>
+                <p id="maxprice" class="value"> kz kz kz </p>
+                <p class="item">Среднеквадратическое отклонение: </p>
+                <p id="deviation" class="value"> kz kz kz </p>
+                <p class="item">Общее число акций (депозитарных расписок): </p>
+                <p class="value">6 676 593 <span>шт</span></p>
+                <p class="item">Капитализация: </p>
+                <p class="value">3.27 <span>млрд. ₽</span></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <hr>
+        <a href="https://grouphms.ru/"><img src="logo.jpg"></a>
+        <a href="https://github.com/Web-toxic/RGZ_Topornina_WEB">Ссылка на GitHub</a>
+    </footer>
+</body>
+</html>
